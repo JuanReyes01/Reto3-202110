@@ -54,7 +54,9 @@ public class TablaSimbolos<K extends Comparable<K>, V> implements ITablaSimbolos
 //	}
 	public V get(K k){
 		int pos = hash(k);
+		if(tabla.getElement(pos)!=null)
 		return tabla.getElement(pos).darValor();
+		return null;
 	}
 
 	/**

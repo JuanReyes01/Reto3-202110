@@ -426,7 +426,7 @@ public class Modelo {
 		retorno = retorno+"El genero mas eschuchado fue: "+ generoMax+" Con "+valMax+" eventos de escucha\n";	
 		
 		//Una lista con solo las canciones unicas
-		TablaSimbolos<String, Reproduccion> cancionesUnicas = new TablaSimbolos<>(valMax+1);
+		TablaHashSeparateChaining<String, Reproduccion> cancionesUnicas = new TablaHashSeparateChaining<>(valMax+1, 1.5);
 		for(int i=1; i<=mayor.size(); i++){
 			Reproduccion actual = mayor.getElement(i); 
 			cancionesUnicas.put(actual.darTrack_id(), actual);			
@@ -439,10 +439,13 @@ public class Modelo {
 			String actual = canciones.getElement(i);
 			ArregloDinamico<String> hashTags = tablaHashTags.get(actual);
 			double sumaVader = 0;
+			if(hashTags!=null){
 			for(int j=1; j<=hashTags.size();j++){
 				sumaVader += tablaValSentimentales.get(hashTags.getElement(j));
 			}
-			retorno = retorno+" Cancion "+i+": "+canciones.getElement(i)+"valor VADER promedio: "+ (sumaVader/hashTags.size())+"\n";
+			}
+			int t = (hashTags!=null)?hashTags.size():1;
+			retorno = retorno+" Cancion "+i+": "+canciones.getElement(i)+"valor VADER promedio: "+ (sumaVader/t)+"\n";
 		}
 		return retorno;
 		
